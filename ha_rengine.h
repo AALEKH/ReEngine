@@ -14,6 +14,39 @@ public:
   }
 };
 
+// handlerton rengine_hton= {
+//   "Rengine",
+//   SHOW_OPTION_YES,
+//   "Redis based temporary data storage engine",
+//   DB_TYPE_UNKOWN,
+//   NULL,    /* Initialize */
+//   0,       /* slot */
+//   0,       /* savepoint size. */
+//   NULL,    /* close_connection */
+//   NULL,    /* savepoint */
+//   NULL,    /* rollback to savepoint */
+//   NULL,    /* release savepoint */
+//   NULL,    /* commit */
+//   NULL,    /* rollback */
+//   NULL,    /* prepare */
+//   NULL,    /* recover */
+//   NULL,    /* commit_by_xid */
+//   NULL,    /* rollback_by_xid */
+//   NULL,    /* create_cursor_read_view */
+//   NULL,    /* set_cursor_read_view */
+//   NULL,    /* close_cursor_read_view */
+//   rengine_create_handler,    /* Create a new handler */
+//   NULL,    /* Drop a database */
+//   NULL,    /* Panic call */
+//   NULL,    /* Release temporary latches */
+//   NULL,    /* Update Statistics */
+//   NULL,    /* Start Consistent Snapshot */
+//   NULL,    /* Flush logs */
+//   NULL,    /* Show status */
+//   NULL,    /* Replication Report Sent Binlog */
+//   HTON_ALTER_NOT_SUPPORTED
+// };
+
 
 class ha_rengine: public handler
 {

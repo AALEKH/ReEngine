@@ -121,7 +121,7 @@ static bool rengine_is_supported_system_table(const char *db,
 
 //// For Redis Function
 
-int pushAsMsgPack(vector<int> data, char *key){
+int pushAsMsgPack(char *data, char *key) {
   redisContext *c;
   redisReply *reply;
   c = redisConnect("127.0.0.1", 6379);
@@ -156,7 +156,6 @@ object getAsMsgPack(char *key) {
   return obj;
 }
 
-
 //// End of Redis Function
 
 int ha_rengine::open(const char *name, int mode, uint test_if_locked)
@@ -178,8 +177,11 @@ int ha_rengine::close(void)
 
 int ha_rengine::write_row(uchar *buf)
 {
-  DBUG_ENTER("ha_rengine::write_row");
+  char *data = (char *)buf;
+  char *key = "foo";
 
+  DBUG_ENTER("ha_rengine::write_row");
+  pushAsMsgPack(data, key);
   DBUG_RETURN(0);
 }
 
@@ -367,17 +369,6 @@ struct st_mysql_storage_engine rengine_storage_engine=
 
 static uint expiry_time_value = 1000;
 
-const char *enum_var_names[]=
-{
-  "e1", "e2", NullS
-};
-
-TYPELIB enum_var_typelib=
-{
-  array_elements(enum_var_names) - 1, "enum_var_typelib",
-  enum_var_names, NULL
-};
-
 static MYSQL_THDVAR_UINT(
   expiry_time,
   expiry_time,
@@ -410,7 +401,6 @@ struct rengine_vars_t
 	int  var1;
 };
 
-// rengine_vars_t rengine_vars= {100, 20.01, "three hundred", true, 0, 8250};
 rengine_vars_t rengine_vars = {1000};
 static st_mysql_show_var show_status_rengine[]=
 {
@@ -426,7 +416,7 @@ mysql_declare_plugin(rengine)
   "Aalekh Nigam",
   "Rengine storage engine",
   PLUGIN_LICENSE_GPL,
-  rengine_init_func,                            /* Plugin Init */
+  rengine_hton,                                 /* Plugin Init */
   NULL,                                         /* Plugin Deinit */
   0x0001,                                       /* 0.1 */
   show_status_rengine,                          /* status variables */
