@@ -1,5 +1,4 @@
 
-// For Redis and basic C++ operations
 #include <iostream>
 #include <string>
 #include <vector>
@@ -13,7 +12,7 @@
 
 // SQL Plugin header's
 #include "sql_class.h"           // MYSQL_HANDLERTON_INTERFACE_VERSION
-#include "ha_example.h"
+#include "ha_rengine.h"
 #include "sql_plugin.h"
 #include "probes_mysql.h"
 
@@ -198,11 +197,7 @@ int ha_rengine::delete_row(const uchar *buf)
   DBUG_RETURN(HA_ERR_WRONG_COMMAND);
 }
 
-int ha_rengine::index_read_map(uchar *buf, const uchar *key,
-                               key_part_map keypart_map __attribute__((unused)),
-                               enum ha_rkey_function find_flag
-                               __attribute__((unused)))
-{
+int ha_rengine::index_read_map(uchar *buf, const uchar *key, key_part_map keypart_map __attribute__((unused)), enum ha_rkey_function find_flag__attribute__((unused))) {
   int rc;
   DBUG_ENTER("ha_rengine::index_read");
   MYSQL_INDEX_READ_ROW_START(table_share->db.str, table_share->table_name.str);
@@ -211,8 +206,7 @@ int ha_rengine::index_read_map(uchar *buf, const uchar *key,
   DBUG_RETURN(rc);
 }
 
-int ha_rengine::index_next(uchar *buf)
-{
+int ha_rengine::index_next(uchar *buf) {
   int rc;
   DBUG_ENTER("ha_rengine::index_next");
   MYSQL_INDEX_READ_ROW_START(table_share->db.str, table_share->table_name.str);
